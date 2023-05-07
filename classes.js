@@ -92,14 +92,24 @@ console.log(rental2);
 // The Question class should also have a method called checkAnswer that takes a
 // user's answer as a parameter and returns true if the answer is correct and false
 // otherwise
-class Question{
-    constructor(text,options,correctAnswer){
-        this.text=text
-        this.options=options
-        this.correctAnswer=correctAnswer
+class Question {
+    constructor(text, options, correctAnswer) {
+      this.text = text;
+      this.options = options;
+      this.correctAnswer = correctAnswer;
     }
+    checkAnswer(userAnswer) {
+      return userAnswer === this.correctAnswer;
+    }
+  }
+  const q = new Question(
+    "Which day of the week is it?",
+    ["Monday", "Tuesday", "Wednesday", "Thursday"],
+    "Monday"
+  );
+  console.log(q.checkAnswer("Monday"));
+  console.log(q.checkAnswer("Thursday"));
 
-}
 // Create a Quiz class with the following properties:
 // ● questions(array):An array of Question objects.
 // ● currentQuestionIndex(number): The index of the current question in the
@@ -113,14 +123,34 @@ class Question{
 // ● submitAnswer: Takes a user's answer as a parameter, checks if the answer is
 // correct using the checkAnswer method of the Question class, and updates the
 // score if the answer is correct
-class Quiz{
-    constructor(questions,currentQuestionIndex,score,addQuestion,nextQuestion,submitAnswer){
-        this.questions=questions
-        this.currentQuestionIndex=currentQuestionIndex
-        this.score=score
-        this.addQuestion=addQuestion
-        this.nextQuestion=nextQuestion
-        this.submitAnswer=submitAnswer
-
+class Quiz {
+    constructor() {
+      this.questions = [];
+      this.currentQuestionIndex = 0;
+      this.score = 0;
     }
-}
+    addResults(question) {
+      this.questions.push(question);
+    }
+    nextResult() {
+      this.currentQuestionIndex++;
+    }
+    submitAnswer(userAnswer) {
+      const currentQuestion = this.questions[this.currentQuestionIndex];
+      if (currentQuestion.checkAnswer(userAnswer)) {
+        this.score++;
+      }
+    }
+  }
+  const q1 = new Question(
+    "Which is the day of the week is it?",
+    ["Monday", "Tuesday", "Wednesday", "Thursday"],
+    "Monday"
+  );
+  const q2 = new Question(
+    "Which month is it?",
+    ["Jan", "Feb", "March", "April"],
+  );
+  const quiz = new Quiz();
+  quiz.addResults(q1);
+  quiz.addResults(q2);
